@@ -1,0 +1,50 @@
+﻿@using SimpleStoreWeb.Data.Common
+@model PaginatedList<OrderItemViewModel>
+@{
+    ViewBag.Title = "Продукти в списък за пазаруване";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @if(item.IsPurchased)
+                    {
+                        <label class="alert-info">Закупен</label>
+                    }
+                    else
+                    {
+                        <a asp-action="Purchase" asp-route-id="@item.Id">Маркирай като купен</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? " disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? " disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="@prevDisabled">
+    Предишна
+</a>&nbsp;
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="@nextDisabled">
+    Следваща
+</a>

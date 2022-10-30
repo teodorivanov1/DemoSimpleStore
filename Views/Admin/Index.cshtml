@@ -1,0 +1,49 @@
+﻿@using SimpleStoreWeb.Data.Common
+@using SimpleStoreWeb.Data.Enums
+@using SimpleStoreWeb.ViewModels.Admin
+@model PaginatedList<CategoryViewModel>
+@{
+    ViewBag.Title = "Добавяне и редактиране на категории";
+}
+
+<p>
+    <a asp-action="upsert">Създаване на категория</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="upsert" asp-route-id="@item.Id">Редактирай</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? " disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? " disabled" : "";
+}
+
+<a asp-action="Index" 
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="@prevDisabled">
+    Предишна
+</a>&nbsp;
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="@nextDisabled">
+    Следваща
+</a>

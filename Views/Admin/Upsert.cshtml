@@ -1,0 +1,19 @@
+﻿@model SimpleStoreWeb.ViewModels.Admin.CategoryViewModel
+@{
+    ViewBag.Title = "Добавяне и редактиране на категории";
+}
+<div class="row">
+    <div class="border col-md-4 offset-md-4">
+        <form method="post" asp-action="upsert" asp-controller="admin">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Name">Име</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Запази" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

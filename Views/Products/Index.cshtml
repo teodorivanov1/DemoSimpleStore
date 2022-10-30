@@ -1,0 +1,56 @@
+﻿@using SimpleStoreWeb.Data.Common
+@model PaginatedList<ProductsViewModel>
+@{
+    ViewBag.Title = "Продукти";
+}
+@if (!Model.IsOrder)
+    @Html.ActionLink("Нов продукт", "upsert")
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="offset-3">
+            <h2>@Html.DisplayFor(modelItem => item.ProductTitle)</h2>
+        </div>
+        <div class="col">
+            @Html.DisplayFor(modelItem => item.PriceStr)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <img src="/img/no_image.jpg" class="img-thumbnail">
+            </div>
+        </div>
+        <div class="col-md-9">
+            @Html.DisplayFor(modelItem => item.Description)
+        </div>
+    </div>
+
+    <div class="row alert-dark">
+        @Html.ActionLink(
+    Model.ActionText,
+    Model.Action,
+    "products",
+    Model.IsOrder ? new { productId = item.Id, orderListId = Model.OrderListId } : new { id = item.Id },
+    null)
+    </div>
+}
+@{
+    var prevDisabled = !Model.HasPreviousPage ? " disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? " disabled" : "";
+}
+
+<a asp-action="@Model.PaginationAction"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="@prevDisabled">
+    Предишна
+</a>&nbsp;
+
+<a asp-action="@Model.PaginationAction"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="@nextDisabled">
+    Следваща
+</a>
+
+

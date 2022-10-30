@@ -1,0 +1,51 @@
+﻿@using SimpleStoreWeb.Data.Common
+@using SimpleStoreWeb.Data.Enums
+@using SimpleStoreWeb.ViewModels.Admin
+@model PaginatedList<OrderViewModel>
+@{
+    ViewBag.Title = "Добавяне и редактиране на списъци с поръчки";
+}
+
+<p>
+    <a asp-action="upsert">Нов списък</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="upsert" asp-route-id="@item.Id">Редактирай</a>|
+                    <a asp-action="order" asp-controller="products" asp-route-id="@item.Id">Добави подукти</a>|
+                    <a asp-action="index" asp-controller="orderitems" asp-route-id="@item.Id">Списък с добавени продукти</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? " disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? " disabled" : "";
+}
+
+<a asp-action="Index" 
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="@prevDisabled">
+    Предишна
+</a>&nbsp;
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="@nextDisabled">
+    Следваща
+</a>

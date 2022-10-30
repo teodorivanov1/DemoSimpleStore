@@ -1,0 +1,42 @@
+﻿@model SimpleStoreWeb.ViewModels.ProductsViewModel
+@{
+    ViewBag.Title = "Добавяне/редакция на продукт";
+}
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}
+<div class="row">
+    <div class="border col-md-4 offset-md-4">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Categories">Категория</label>
+                @Html.DropDownListFor(
+                    m => m.CategoryId,
+                    new SelectList(Model.Categories, "Id", "Name"),
+                    "Избор на категория",
+                    new { @class = "form-control" })
+                <span asp-validation-for="Categories" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name">Име</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price">Цена</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Описание</label>
+                <input type="text" asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Запази" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
